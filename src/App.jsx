@@ -1,20 +1,26 @@
-﻿import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import About from "./components/About";
-import Projects from "./components/Projects";
+import FeaturedProjects from "./components/FeaturedProjects";
+import DesignProcess from "./components/DesignProcess";
+import AcademicWork from "./components/AcademicWork";
 import Gallery from "./components/Gallery";
+import About from "./components/About";
 import Contact from "./components/Contact";
+import ModelViewer from "./components/ModelViewer";
+import PDFViewer from "./components/PDFViewer";
 import "./App.css";
 
 function App() {
-  var lenisRef = useRef(null);
+  const lenisRef = useRef(null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [viewerPdf, setViewerPdf] = useState(null);
 
-  useEffect(function() {
-    var lenis = new Lenis({
+  useEffect(() => {
+    const lenis = new Lenis({
       duration: 1.2,
-      easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       wheelMultiplier: 1,
       smoothWheel: true,
@@ -27,19 +33,47 @@ function App() {
     }
     requestAnimationFrame(raf);
 
-    return function() { lenis.destroy(); };
+    return () => {
+      lenis.destroy();
+    };
   }, []);
+
+  // Lock scroll when full-screen 3D viewer or PDF is open
+  useEffect(() => {
+    if (activeProject || viewerPdf) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [activeProject, viewerPdf]);
 
   return (
     <>
+      <div className="noise-overlay" />
       <Navbar lenis={lenisRef} />
       <main>
         <Hero />
+        <FeaturedProjects onSelectProject={setActiveProject} />
+        <DesignProcess />
+        <AcademicWork onSelectPdf={setViewerPdf} />
+        <Gallery onSelectPdf={setViewerPdf} />
         <About />
-        <Projects />
-        <Gallery />
         <Contact />
       </main>
+
+      {activeProject && (
+        <ModelViewer 
+          project={activeProject} 
+          onClose={() => setActiveProject(null)} 
+        />
+      )}
+
+      {viewerPdf && (
+        <PDFViewer 
+          pdf={viewerPdf} 
+          onClose={() => setViewerPdf(null)} 
+        />
+      )}
     </>
   );
 }

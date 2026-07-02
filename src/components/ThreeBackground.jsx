@@ -1,82 +1,86 @@
-﻿import { useRef, useMemo } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { MeshDistortMaterial } from "@react-three/drei";
+import { useRef, useMemo } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Float } from "@react-three/drei";
 
-function Shapes() {
-  var ref = useRef();
-  var mouse = useRef({ x: 0, y: 0 });
-  var scrollY = useRef(0);
-  var { viewport, pointer } = useThree();
+function ArchitecturalStructure() {
+  const groupRef = useRef();
 
-  var shapes = useMemo(function() {
-    var arr = [];
-    var colors = ["#c86a45", "#7a9e6b", "#5c3a21", "#7a5238", "#d88868"];
-    for (var i = 0; i < 14; i++) {
+  // Create subtle architectural massing elements & grid volumes
+  const elements = useMemo(() => {
+    const arr = [];
+    const colors = ["#d4a574", "#e8c9a0", "#b8885a", "#71717a", "#52525b"];
+    
+    // Core massing blocks
+    for (let i = 0; i < 16; i++) {
+      const x = (Math.random() - 0.5) * 12;
+      const y = (Math.random() - 0.5) * 7;
+      const z = (Math.random() - 0.5) * 6 - 2;
+      const scaleX = 0.4 + Math.random() * 0.9;
+      const scaleY = 0.2 + Math.random() * 1.4;
+      const scaleZ = 0.4 + Math.random() * 0.9;
+      
       arr.push({
-        basePos: [(Math.random() - 0.5) * 11, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 5 - 2],
-        rot: Math.random() * Math.PI * 2,
-        scale: 0.15 + Math.random() * 0.3,
+        position: [x, y, z],
+        scale: [scaleX, scaleY, scaleZ],
+        rotation: [(Math.random() - 0.5) * 0.4, Math.random() * Math.PI, (Math.random() - 0.5) * 0.4],
         color: colors[i % colors.length],
-        speed: 0.3 + Math.random() * 0.6,
-        type: i % 3,
-        floatOffset: Math.random() * Math.PI * 2,
-        driftX: (Math.random() - 0.5) * 0.004,
-        driftY: (Math.random() - 0.5) * 0.004,
+        wireframe: i % 2 === 0,
+        speed: 0.1 + Math.random() * 0.2
       });
     }
     return arr;
   }, []);
 
-  useFrame(function(state) {
-    if (!ref.current) return;
-    var t = state.clock.elapsedTime;
-
-    // gentle group rotation follows pointer
-    ref.current.rotation.y = state.pointer.x * 0.2;
-    ref.current.rotation.x = state.pointer.y * 0.1;
-
-    ref.current.children.forEach(function(child, i) {
-      if (i >= shapes.length) return;
-      var s = shapes[i];
-      var sp = s.basePos;
-
-      // mouse repulsion
-      var dx = state.pointer.x * viewport.width * 0.5 - sp[0];
-      var dy = -(state.pointer.y * viewport.height * 0.5) - sp[1];
-      var dist = Math.sqrt(dx * dx + dy * dy);
-      var repel = Math.max(0, 1 - dist / 5);
-      var pushX = dx * repel * 0.06;
-      var pushY = dy * repel * 0.06;
-
-      // floating oscillation
-      var floatY = Math.sin(t * s.speed + s.floatOffset) * 0.2;
-      var floatX = Math.cos(t * s.speed * 0.7 + s.floatOffset) * 0.1;
-      // drift
-      var driftX = Math.sin(t * 0.15 + i * 1.5) * s.driftX * 30;
-      var driftY = Math.cos(t * 0.12 + i * 2.3) * s.driftY * 30;
-
-      child.position.x = sp[0] + pushX + floatX + driftX;
-      child.position.y = sp[1] + pushY + floatY + driftY;
-
-      // spin faster near mouse
-      var spinSpeed = s.speed * (1 + repel * 2);
-      child.rotation.x += 0.003 * spinSpeed;
-      child.rotation.y += 0.004 * spinSpeed;
-      child.rotation.z += 0.002 * spinSpeed;
-    });
+  useFrame((state) => {
+    if (!groupRef.current) return;
+    const { pointer } = state;
+    groupRef.current.rotation.y = pointer.x * 0.25;
+    groupRef.current.rotation.x = -pointer.y * 0.15;
   });
 
   return (
-    <group ref={ref}>
-      {shapes.map(function(s, i) {
-        var Geo = s.type === 0 ? "box" : s.type === 1 ? "octahedron" : "icosahedron";
-        return (
-          <mesh key={i} position={s.basePos} scale={s.scale} rotation={[s.rot, s.rot, s.rot]}>
-            {Geo === "box" ? <boxGeometry args={[1, 1, 1]} /> : Geo === "octahedron" ? <octahedronGeometry args={[1, 0]} /> : <icosahedronGeometry args={[1, 0]} />}
-            <MeshDistortMaterial color={s.color} transparent opacity={0.12} wireframe distort={0.15} speed={1.5} />
+    <group ref={groupRef}>
+      {/* Central Architectural Truss Pavilion Form */}
+      <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.6}>
+        <mesh position={[0, 0, -1]}>
+          <octahedronGeometry args={[2.2, 0]} />
+          <meshStandardMaterial 
+            color="#d4a574" 
+            wireframe 
+            transparent 
+            opacity={0.35} 
+          />
+        </mesh>
+        <mesh position={[0, 0, -1]} rotation={[0.4, 0.4, 0]}>
+          <boxGeometry args={[2.8, 1.6, 2.8]} />
+          <meshStandardMaterial 
+            color="#e8c9a0" 
+            wireframe 
+            transparent 
+            opacity={0.2} 
+          />
+        </mesh>
+      </Float>
+
+      {/* Floating volumetric massings */}
+      {elements.map((el, idx) => (
+        <Float key={idx} speed={el.speed * 2} rotationIntensity={0.2} floatIntensity={0.4}>
+          <mesh 
+            position={el.position} 
+            rotation={el.rotation} 
+            scale={el.scale}
+          >
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial 
+              color={el.color} 
+              wireframe={el.wireframe} 
+              transparent 
+              opacity={el.wireframe ? 0.25 : 0.08}
+              roughness={0.4}
+            />
           </mesh>
-        );
-      })}
+        </Float>
+      ))}
     </group>
   );
 }
@@ -84,11 +88,15 @@ function Shapes() {
 export default function ThreeBackground() {
   return (
     <div className="three-bg">
-      <Canvas camera={{ position: [0, 0, 6], fov: 50 }} dpr={[1, 1.5]} gl={{ antialias: true, alpha: true }}>
-        <ambientLight intensity={0.6} />
-        <pointLight position={[5, 5, 5]} intensity={0.8} color="#c86a45" />
-        <pointLight position={[-5, -3, -5]} intensity={0.4} color="#7a9e6b" />
-        <Shapes />
+      <Canvas
+        camera={{ position: [0, 0, 7], fov: 45 }}
+        dpr={[1, 1.5]}
+        gl={{ antialias: true, alpha: true }}
+      >
+        <ambientLight intensity={0.5} />
+        <pointLight position={[6, 8, 4]} intensity={2.5} color="#d4a574" />
+        <pointLight position={[-6, -4, -4]} intensity={1.2} color="#60a5fa" />
+        <ArchitecturalStructure />
       </Canvas>
     </div>
   );

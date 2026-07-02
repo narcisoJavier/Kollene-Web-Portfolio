@@ -1,88 +1,100 @@
-﻿import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-var sections = [
-  { id: "hero", label: "Home" },
+const navSections = [
+  { id: "hero", label: "Overview" },
+  { id: "projects", label: "3D CAD Works" },
+  { id: "methodology", label: "Process" },
+  { id: "academic", label: "Academic Research" },
+  { id: "gallery", label: "Plates & Gallery" },
   { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "gallery", label: "Gallery" },
-  { id: "contact", label: "Contact" },
+  { id: "contact", label: "Contact" }
 ];
 
-export default function Navbar(props) {
-  var [active, setActive] = useState("hero");
-  var [scrolled, setScrolled] = useState(false);
+export default function Navbar({ lenis }) {
+  const [active, setActive] = useState("hero");
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  useEffect(function() {
-    var lenis = props.lenis ? props.lenis.current : null;
+  useEffect(() => {
+    function handleScroll() {
+      const scrollY = window.scrollY;
+      setScrolled(scrollY > 40);
 
-    function handleScroll(e) {
-      setScrolled(e.scroll > 60);
-      var scrollPos = e.scroll + 120;
-      var current = "hero";
-      for (var i = 0; i < sections.length; i++) {
-        var el = document.getElementById(sections[i].id);
-        if (el && scrollPos >= el.offsetTop) current = sections[i].id;
+      const scrollPos = scrollY + 160;
+      let current = "hero";
+
+      for (let i = 0; i < navSections.length; i++) {
+        const el = document.getElementById(navSections[i].id);
+        if (el && scrollPos >= el.offsetTop) {
+          current = navSections[i].id;
+        }
       }
       setActive(current);
     }
 
-    if (lenis) {
-      lenis.on("scroll", handleScroll);
-      return function() { lenis.off("scroll", handleScroll); };
-    }
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    function fallbackScroll() {
-      setScrolled(window.scrollY > 60);
-      var scrollPos = window.scrollY + 120;
-      var current = "hero";
-      for (var i = 0; i < sections.length; i++) {
-        var el = document.getElementById(sections[i].id);
-        if (el && scrollPos >= el.offsetTop) current = sections[i].id;
-      }
-      setActive(current);
-    }
-    window.addEventListener("scroll", fallbackScroll, { passive: true });
-    return function() { window.removeEventListener("scroll", fallbackScroll); };
-  }, [props.lenis]);
-
-  function scrollTo(id) {
-    var lenis = props.lenis ? props.lenis.current : null;
-    if (lenis) {
-      lenis.scrollTo("#" + id, { offset: -80, duration: 1.4 });
+  function scrollToSection(id) {
+    setMobileOpen(false);
+    if (lenis && lenis.current) {
+      lenis.current.scrollTo("#" + id, { offset: -60, duration: 1.2 });
     } else {
-      var el = document.getElementById(id);
+      const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: "smooth" });
     }
   }
 
-  var isHero = active === "hero";
-  var navClass = "navbar";
-  if (scrolled) navClass += " scrolled";
-  if (isHero) navClass += " hero-theme";
-
   return (
-    <nav className={navClass}>
-      <div className="nav-inner">
-        <span className="nav-logo" onClick={function() { scrollTo("hero"); }}>
-          <img src="/logo-nav.png" alt="Logo" className="nav-logo-img" />
-          <span className="nav-logo-text">Kollene Aika</span>
-          <span className="nav-logo-sub">Architecture Portfolio</span>
-        </span>
-        <div className="nav-links">
-          {sections.map(function(s) {
-            return (
+    <>
+      <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
+        <div className="nav-inner">
+          <div className="nav-logo" onClick={() => scrollToSection("hero")}>
+            <div>
+              <span className="nav-logo-text">
+                KOLLENE AIKA <span className="nav-logo-accent">LEYSON</span>
+              </span>
+              <span className="nav-logo-sub">Architecture Portfolio &middot; Mapúa Univ</span>
+            </div>
+          </div>
+
+          <nav className="nav-links">
+            {navSections.map(s => (
               <button
                 key={s.id}
-                className={"nav-link" + (active === s.id ? " active" : "")}
-                onClick={function() { scrollTo(s.id); }}
+                className={`nav-link ${active === s.id ? "active" : ""}`}
+                onClick={() => scrollToSection(s.id)}
               >
                 {s.label}
                 <span className="nav-indicator" />
               </button>
-            );
-          })}
+            ))}
+          </nav>
+
+          <div 
+            className={`nav-hamburger ${mobileOpen ? "open" : ""}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle mobile navigation menu"
+          >
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
+      </header>
+
+      <div className={`nav-mobile-overlay ${mobileOpen ? "open" : ""}`}>
+        {navSections.map(s => (
+          <button
+            key={s.id}
+            className={`nav-mobile-link ${active === s.id ? "active" : ""}`}
+            onClick={() => scrollToSection(s.id)}
+          >
+            {s.label}
+          </button>
+        ))}
       </div>
-    </nav>
+    </>
   );
 }
