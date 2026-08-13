@@ -1,11 +1,10 @@
-import { profile } from "../data/content";
+import { profile } from "../../data/content";
 
 export default function About() {
   return (
     <section id="about" className="about">
       <div className="container">
         <div className="about-layout">
-          {/* Left Column - Portrait & Credential Badge */}
           <div className="about-photo-wrapper">
             <div className="about-photo">
               <img 
@@ -36,7 +35,6 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right Column - Bio, Skills & Research Interests */}
           <div className="about-content">
             <div>
               <div className="section-label">Architectural Profile</div>
@@ -49,7 +47,6 @@ export default function About() {
               ))}
             </div>
 
-            {/* Quote Block */}
             <div 
               style={{
                 padding: "20px 24px",
@@ -67,9 +64,7 @@ export default function About() {
               </span>
             </div>
 
-            {/* Cards Grid */}
             <div className="about-cards">
-              {/* Software Skills */}
               <div className="about-card">
                 <h3>CAD & Visualization Tools</h3>
                 <div className="skills-grid">
@@ -90,7 +85,6 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Research & Focus Areas */}
               <div className="about-card">
                 <h3>Research & Studio Focus</h3>
                 <ul className="interests-list">

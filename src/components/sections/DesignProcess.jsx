@@ -1,4 +1,4 @@
-import { designProcessSteps } from "../data/content";
+import { designProcessSteps } from "../../data/content";
 
 export default function DesignProcess() {
   return (
@@ -20,7 +20,7 @@ export default function DesignProcess() {
               <h3 className="process-step-title">{step.title}</h3>
               <p className="process-step-desc">{step.description}</p>
               
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "20px" }}>
+              <div style={{ display: "flex", flexWrap: "gap", gap: "6px", marginTop: "20px" }}>
                 {step.tags.map((tag, i) => (
                   <span 
                     key={i} 

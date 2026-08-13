@@ -1,4 +1,4 @@
-import { profile } from "../data/content";
+import { profile } from "../../data/content";
 
 export default function Contact() {
   return (

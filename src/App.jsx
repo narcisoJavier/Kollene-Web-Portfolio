@@ -1,15 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import FeaturedProjects from "./components/FeaturedProjects";
-import DesignProcess from "./components/DesignProcess";
-import AcademicWork from "./components/AcademicWork";
-import Gallery from "./components/Gallery";
-import About from "./components/About";
-import Contact from "./components/Contact";
-import ModelViewer from "./components/ModelViewer";
-import PDFViewer from "./components/PDFViewer";
+
+// UI Components
+import Navbar from "./components/ui/Navbar";
+import PDFViewer from "./components/ui/PDFViewer";
+
+// 3D Overlays
+import ModelViewer from "./components/3d/ModelViewer";
+
+// Page Sections
+import Hero from "./components/sections/Hero";
+import FeaturedProjects from "./components/sections/FeaturedProjects";
+import DesignProcess from "./components/sections/DesignProcess";
+import AcademicWork from "./components/sections/AcademicWork";
+import Gallery from "./components/sections/Gallery";
+import About from "./components/sections/About";
+import Contact from "./components/sections/Contact";
+
 import "./App.css";
 
 function App() {

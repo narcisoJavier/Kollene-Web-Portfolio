@@ -5,12 +5,10 @@ import { Float } from "@react-three/drei";
 function ArchitecturalStructure() {
   const groupRef = useRef();
 
-  // Create subtle architectural massing elements & grid volumes
   const elements = useMemo(() => {
     const arr = [];
     const colors = ["#d4a574", "#e8c9a0", "#b8885a", "#71717a", "#52525b"];
     
-    // Core massing blocks
     for (let i = 0; i < 16; i++) {
       const x = (Math.random() - 0.5) * 12;
       const y = (Math.random() - 0.5) * 7;
@@ -40,7 +38,6 @@ function ArchitecturalStructure() {
 
   return (
     <group ref={groupRef}>
-      {/* Central Architectural Truss Pavilion Form */}
       <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.6}>
         <mesh position={[0, 0, -1]}>
           <octahedronGeometry args={[2.2, 0]} />
@@ -62,7 +59,6 @@ function ArchitecturalStructure() {
         </mesh>
       </Float>
 
-      {/* Floating volumetric massings */}
       {elements.map((el, idx) => (
         <Float key={idx} speed={el.speed * 2} rotationIntensity={0.2} floatIntensity={0.4}>
           <mesh 

@@ -1,5 +1,5 @@
-import { profile } from "../data/content";
-import ThreeBackground from "./ThreeBackground";
+import { profile } from "../../data/content";
+import ThreeBackground from "../3d/ThreeBackground";
 
 export default function Hero() {
   function scrollTo(id) {

@@ -1,5 +1,5 @@
-import { architectureProjects } from "../data/content";
-import ProjectScene from "./ProjectScene";
+import { architectureProjects } from "../../data/content";
+import ProjectScene from "../3d/ProjectScene";
 
 export default function FeaturedProjects({ onSelectProject }) {
   return (

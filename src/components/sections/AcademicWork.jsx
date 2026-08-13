@@ -1,4 +1,4 @@
-import { academicWorks } from "../data/content";
+import { academicWorks } from "../../data/content";
 
 export default function AcademicWork({ onSelectPdf }) {
   return (

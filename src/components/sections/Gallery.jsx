@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { galleryItems } from "../data/content";
+import { galleryItems } from "../../data/content";
 
 export default function Gallery({ onSelectPdf }) {
   const [selectedImg, setSelectedImg] = useState(null);
