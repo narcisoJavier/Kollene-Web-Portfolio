@@ -27,13 +27,13 @@ export default function Hero() {
         </p>
 
         <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap", marginBottom: "32px" }}>
-          <span className="project-tag" style={{ background: "rgba(212,165,116,0.1)" }}>
+          <span className="project-tag">
             3D CAD & Digital Craft
           </span>
-          <span className="project-tag" style={{ background: "rgba(255,255,255,0.03)", borderColor: "var(--border)" }}>
+          <span className="project-tag" style={{ background: "var(--surface)", color: "var(--text-secondary)" }}>
             Tropical Resilience
           </span>
-          <span className="project-tag" style={{ background: "rgba(255,255,255,0.03)", borderColor: "var(--border)" }}>
+          <span className="project-tag" style={{ background: "var(--surface)", color: "var(--text-secondary)" }}>
             Filipino Vernacular
           </span>
         </div>

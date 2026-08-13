@@ -12,7 +12,7 @@ export default function Gallery({ onSelectPdf }) {
     : galleryItems.filter(item => item.category === activeCategory);
 
   return (
-    <section id="gallery" className="gallery" style={{ padding: "var(--section-padding)", background: "var(--bg-secondary)" }}>
+    <section id="gallery" className="gallery">
       <div className="container">
         <div className="section-label">Visual Archive</div>
         <h2 className="section-title">Design Plates & Studio Archive</h2>
@@ -34,10 +34,11 @@ export default function Gallery({ onSelectPdf }) {
                 fontWeight: 600,
                 border: "1px solid",
                 borderColor: activeCategory === cat ? "var(--accent)" : "var(--border)",
-                background: activeCategory === cat ? "var(--accent-glow)" : "rgba(255,255,255,0.02)",
+                background: activeCategory === cat ? "var(--accent-glow)" : "var(--surface)",
                 color: activeCategory === cat ? "var(--accent)" : "var(--text-secondary)",
                 transition: "all 0.3s var(--ease-out)",
-                cursor: "pointer"
+                cursor: "pointer",
+                boxShadow: "var(--shadow-sm)"
               }}
             >
               {cat}
@@ -46,7 +47,7 @@ export default function Gallery({ onSelectPdf }) {
         </div>
 
         {/* Grid */}
-        <div className="gallery-flat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "16px" }}>
+        <div className="gallery-flat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "18px" }}>
           {filteredItems.map((item) => {
             if (item.type === "image") {
               return (
@@ -54,16 +55,8 @@ export default function Gallery({ onSelectPdf }) {
                   key={item.id}
                   className="gallery-card"
                   onClick={() => setSelectedImg(item)}
-                  style={{
-                    background: "var(--bg-elevated)",
-                    border: "1px solid var(--border)",
-                    borderRadius: "14px",
-                    overflow: "hidden",
-                    cursor: "pointer",
-                    transition: "all 0.4s var(--ease-out)"
-                  }}
                 >
-                  <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", overflow: "hidden", background: "#000" }}>
+                  <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", overflow: "hidden", background: "var(--bg-secondary)" }}>
                     <img
                       src={item.src}
                       alt={item.title}
@@ -86,21 +79,13 @@ export default function Gallery({ onSelectPdf }) {
                 key={item.id}
                 className="gallery-card"
                 onClick={() => onSelectPdf(item.pdf)}
-                style={{
-                  background: "var(--bg-elevated)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "14px",
-                  overflow: "hidden",
-                  cursor: "pointer",
-                  transition: "all 0.4s var(--ease-out)"
-                }}
               >
-                <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", overflow: "hidden", background: "#000" }}>
+                <div style={{ position: "relative", width: "100%", aspectRatio: "4/3", overflow: "hidden", background: "var(--bg-secondary)" }}>
                   <img
                     src={item.preview}
                     alt={item.title}
                     loading="lazy"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.7 }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9 }}
                   />
                   <div
                     style={{
@@ -110,15 +95,16 @@ export default function Gallery({ onSelectPdf }) {
                       width: "32px",
                       height: "32px",
                       borderRadius: "50%",
-                      background: "rgba(10,10,11,0.8)",
+                      background: "var(--bg-glass-heavy)",
                       border: "1px solid var(--border)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "var(--accent)"
+                      color: "var(--accent)",
+                      boxShadow: "var(--shadow-sm)"
                     }}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                       <polyline points="14 2 14 8 20 8" />
                     </svg>

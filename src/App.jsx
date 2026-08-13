@@ -24,6 +24,21 @@ function App() {
   const [activeProject, setActiveProject] = useState(null);
   const [viewerPdf, setViewerPdf] = useState(null);
 
+  // Theme state: defaults to 'light' (as requested) with option to switch to 'dark'
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem("portfolio-theme");
+    return saved || "light";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("portfolio-theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -57,9 +72,14 @@ function App() {
   return (
     <>
       <div className="noise-overlay" />
-      <Navbar lenis={lenisRef} />
+      <Navbar 
+        lenis={lenisRef} 
+        theme={theme} 
+        onToggleTheme={toggleTheme} 
+      />
+      
       <main>
-        <Hero />
+        <Hero theme={theme} />
         <FeaturedProjects onSelectProject={setActiveProject} />
         <DesignProcess />
         <AcademicWork onSelectPdf={setViewerPdf} />

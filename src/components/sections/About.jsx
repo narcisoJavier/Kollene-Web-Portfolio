@@ -13,7 +13,6 @@ export default function About() {
                 loading="lazy" 
               />
             </div>
-            <div className="about-photo-accent" />
 
             <div className="glass-card" style={{ marginTop: "24px", padding: "20px" }}>
               <div className="detail-row">
@@ -50,7 +49,7 @@ export default function About() {
             <div 
               style={{
                 padding: "20px 24px",
-                background: "rgba(212,165,116,0.06)",
+                background: "var(--accent-glow)",
                 borderLeft: "3px solid var(--accent)",
                 borderRadius: "0 12px 12px 0",
                 margin: "12px 0"
@@ -59,7 +58,7 @@ export default function About() {
               <p style={{ fontStyle: "italic", color: "var(--text-primary)", fontSize: "0.95rem", marginBottom: "6px" }}>
                 "{profile.quote.text}"
               </p>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--accent)" }}>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.75rem", color: "var(--accent)", fontWeight: 600 }}>
                 &mdash; {profile.quote.author}
               </span>
             </div>

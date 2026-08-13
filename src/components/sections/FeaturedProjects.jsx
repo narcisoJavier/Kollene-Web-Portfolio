@@ -31,7 +31,9 @@ export default function FeaturedProjects({ onSelectProject }) {
                     scale={project.modelConfig?.scale || 1.1}
                     autoRotate={true}
                     interactive={false}
-                    lightPreset="studio"
+                    showFlatLand={true}
+                    timeOfDay={13.0}
+                    showSunPath={false}
                   />
                   <div className="project-model-overlay">
                     <div className="project-model-hint">
@@ -61,8 +63,8 @@ export default function FeaturedProjects({ onSelectProject }) {
                     {project.description}
                   </p>
 
-                  <div style={{ padding: "16px", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px solid var(--border)" }}>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px" }}>
+                  <div style={{ padding: "16px", background: "var(--surface)", borderRadius: "12px", border: "1px solid var(--border)", boxShadow: "var(--shadow-sm)" }}>
+                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "4px", fontWeight: 600 }}>
                       Design Concept
                     </div>
                     <div style={{ fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.5" }}>
