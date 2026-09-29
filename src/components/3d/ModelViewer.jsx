@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
 import ProjectScene from "./ProjectScene";
 
 export default function ModelViewer({ project, onClose }) {
@@ -12,7 +12,6 @@ export default function ModelViewer({ project, onClose }) {
   // Sun Path & Solar Simulation State
   const [timeOfDay, setTimeOfDay] = useState(13.5); // 1:30 PM default
   const [isSunPlaying, setIsSunPlaying] = useState(false);
-  const [solarInfo, setSolarInfo] = useState({ altitudeDeg: 62, azimuthDeg: 195 });
 
   // Camera & HUD stats
   const [hudStats, setHudStats] = useState({ x: "4.5", y: "3.2", z: "5.5", headingDeg: 215, compass: "SW" });

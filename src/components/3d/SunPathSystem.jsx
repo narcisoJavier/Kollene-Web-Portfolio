@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 // Calculate solar position based on time of day (0 to 24 hours)
-export function getSolarCoordinates(timeOfDay, radius = 22) {
+function getSolarCoordinates(timeOfDay, radius = 22) {
   // Normalize time: 6:00 = sunrise (East, Azimuth 90°), 12:00 = noon (South, Azimuth 180°), 18:00 = sunset (West, Azimuth 270°)
   const isDay = timeOfDay >= 5.5 && timeOfDay <= 18.5;
   

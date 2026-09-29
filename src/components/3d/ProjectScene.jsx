@@ -7,7 +7,7 @@ import CreativeControls from "./CreativeControls";
 import FlatLandEnvironment from "./FlatLandEnvironment";
 import SunPathSystem from "./SunPathSystem";
 
-function Model({ url, scale = 1, autoRotate = false, castShadow = true }) {
+function Model({ url, scale = 1, autoRotate = false, castShadow: _castShadow = true }) {
   const group = useRef();
   const { scene } = useGLTF(url);
 

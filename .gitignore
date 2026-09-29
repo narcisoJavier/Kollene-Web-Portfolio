@@ -35,3 +35,7 @@ lerna-debug.log*
 *.pdf
 *-fullpage.png
 *-v2.png
+
+# Raw source media folder at root only (assets are served from public/media)
+/media/
+!public/media/

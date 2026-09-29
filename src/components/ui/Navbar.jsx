@@ -10,7 +10,7 @@ const navSections = [
   { id: "contact", label: "Contact" }
 ];
 
-export default function Navbar({ lenis, theme = "light", onToggleTheme }) {
+export default function Navbar({ lenis, theme = "light", onToggleTheme, onOpenMonthsary }) {
   const [active, setActive] = useState("hero");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -77,8 +77,19 @@ export default function Navbar({ lenis, theme = "light", onToggleTheme }) {
             ))}
           </nav>
 
-          {/* Right Action Utilities (Theme Switcher & Mobile Menu) */}
+          {/* Right Action Utilities (Theme Switcher, Monthsary Surprise & Mobile Menu) */}
           <div className="nav-actions">
+            {onOpenMonthsary && (
+              <button 
+                className="nav-monthsary-btn"
+                onClick={onOpenMonthsary}
+                title="A Special Surprise for September 30"
+              >
+                <span className="heart-pulse">💖</span>
+                <span>Sept 30 Surprise</span>
+              </button>
+            )}
+
             <button
               className="theme-toggle-btn"
               onClick={onToggleTheme}
@@ -129,6 +140,20 @@ export default function Navbar({ lenis, theme = "light", onToggleTheme }) {
             {theme === "light" ? "🌙 Dark" : "☀️ Light"}
           </button>
         </div>
+
+        {onOpenMonthsary && (
+          <button
+            className="nav-monthsary-btn"
+            style={{ width: "100%", maxWidth: "320px", justifyContent: "center", marginBottom: "16px", padding: "12px" }}
+            onClick={() => {
+              setMobileOpen(false);
+              onOpenMonthsary();
+            }}
+          >
+            <span className="heart-pulse">💖</span>
+            <span>Open Sept 30 Monthsary Surprise</span>
+          </button>
+        )}
 
         {navSections.map((s) => (
           <button

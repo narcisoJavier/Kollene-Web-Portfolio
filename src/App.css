@@ -456,6 +456,35 @@ button {
   transform: scale(1.08);
 }
 
+.nav-monthsary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  color: #ffffff !important;
+  border: none;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3);
+  transition: all 0.25s var(--ease-out);
+  animation: pulse-badge 2.5s infinite ease-in-out;
+  white-space: nowrap;
+}
+
+.nav-monthsary-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
+}
+
+.heart-pulse {
+  animation: heartbeat 1.2s infinite ease-in-out;
+  display: inline-block;
+}
+
 /* Mobile hamburger */
 .nav-hamburger {
   display: none;
